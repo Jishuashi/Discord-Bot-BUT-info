@@ -2,6 +2,6 @@ module.exports = {
     name: 'ready',
     once: true,
     execute(client) {
-        console.log("Je suis ready")
+        console.log("Je suis ready");
     }
 }

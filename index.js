@@ -5,6 +5,6 @@ const client = new Client({ intents: 98045 });
 
 client.commands = new Collection();
 
-['CommandUtil', 'EventUtil'].forEach(handler => { require(`./utils/handlers/${handler}`) })
+['CommandUtil', 'EventUtil'].forEach(handler => { require(`./utils/handlers/${handler}`)(client) })
 
 client.login(process.env.DISCORD_TOKEN);
