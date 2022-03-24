@@ -38,7 +38,7 @@ module.exports = {
         }
 
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply('Pong!');
     },
 

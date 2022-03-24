@@ -43,7 +43,7 @@ module.exports = {
 
         }, 120000);
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply(`${interaction.name} n'admet pas de / commands`);
     },
 

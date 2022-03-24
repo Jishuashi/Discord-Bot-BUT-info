@@ -8,7 +8,7 @@ module.exports = {
     run: (client, message, args) => {
         message.channel.send(`Nom du Serveur: ${message.guild.name}\n Nombre d'utilisateurs: ${message.guild.memberCount}`);
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply(`Nom du Serveur: ${interaction.guild.name}\n Nombre d'utilisateurs: ${interaction.guild.memberCount}`);
     },
 

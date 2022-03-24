@@ -356,7 +356,7 @@ module.exports = {
             message.channel.send(`${args[0]} : n'est pas un argument valide`);
         }
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply('Rendu n\'accepte pas les / commands');
     },
 

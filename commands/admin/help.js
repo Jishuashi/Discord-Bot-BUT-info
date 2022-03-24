@@ -45,7 +45,7 @@ module.exports = {
         type: "STRING",
         required: false
     }],
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         const cmdName = interaction.options.getString('command');
 
         if (!cmdName) {

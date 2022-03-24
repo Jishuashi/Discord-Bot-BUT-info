@@ -8,7 +8,7 @@ module.exports = {
     run: (client, message, args) => {
         return message.channel.send(`Votre Avatar est : ${message.author.displayAvatarURL({format:'png'})}`);
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         return interaction.reply(`Votre Avatar est : ${interaction.member.displayAvatarURL({format:'png'})}`);
     },
 

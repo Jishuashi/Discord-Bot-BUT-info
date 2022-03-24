@@ -8,7 +8,7 @@ module.exports = {
     run: (client, message, args) => {
         message.channel.send("pong!");
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply('Pong!');
     },
 

@@ -118,7 +118,7 @@ module.exports = {
 
         message.channel.send({ embeds: [embedDay] });
     },
-    runInterraction: (client, interaction) => {
+    runInteraction: (client, interaction) => {
         interaction.reply('Planning n\'accepte pas les / commands');
     },
 

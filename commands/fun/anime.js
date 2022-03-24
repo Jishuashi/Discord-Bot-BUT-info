@@ -24,7 +24,7 @@ module.exports = {
         message.channel.send({ embeds: [embed] });
 
     },
-    runInterraction: async(client, interaction) => {
+    runInteraction: async(client, interaction) => {
         const anime = await fetch("https://www.reddit.com/user/emdix/m/animemes/top/.json?sort=top&t=day&limit=500")
             .then(res => res.json())
             .then(json => json.data.children);
