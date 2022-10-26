@@ -15,7 +15,15 @@ module.exports = {
         function saveBDD(pEvents) {
             let donnees = JSON.stringify(pEvents)
             fs.writeFileSync("./edt.json", donnees)
-        }
+        };
+
+        function compareTo(pObj1, pObj2) {
+            if (pObj1.starttime[0] != pObj2.starttime[0]) {
+                return true;
+            } else if (pObj1.starttime[0] == pObj2.endtime[0]) {
+                return true;
+            } else return false;
+        };
 
         axios({
                 method: 'get',
@@ -61,6 +69,7 @@ module.exports = {
 
         } else {
             for (let g = 0; g < lenghtEdt; g++) {
+
                 if (edtParsed[g].day == dayEDT[0]) {
                     indexofDay = g;
                     break;
@@ -70,34 +79,51 @@ module.exports = {
 
         let dayArray = [];
         let testDay = [];
+        let i = indexofDay;
+        let indexEnd = 0
 
-        for (let i = indexofDay; i < lenghtEdt; i += indexWeek) {
+        for (let j = indexofDay; j < lenghtEdt; j++) {
+            console.log(edtParsed[j].resources[0].module);
+            if (dayEDT[indexDay] != edtParsed[j].day[0]) {
+                indexEnd = j;
+                break;
+            }
+        }
+
+        while (i < lenghtEdt) {
 
             if (dayEDT[indexDay] != edtParsed[i].day[0]) {
+                indexEnd = i;
                 break;
             }
 
-            if (edtParsed[i].resources[0].module == undefined) {
-                if (edtParsed[i].notes == undefined) {
-                    dayArray.push([edtParsed[i].prettytimes[0], "Cours Non Défini", edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
+            if (i == indexofDay || compareTo(edtParsed[i], edtParsed[i - 1])) {
 
+                if (edtParsed[i].resources[0].module == undefined) {
+                    if (edtParsed[i].notes == undefined) {
+                        dayArray.push([edtParsed[i].prettytimes[0], "Cours Non Défini", edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
+
+                    } else {
+                        dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].notes[0], edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
+                    }
+                } else if (edtParsed[i].resources[0].staff == undefined) {
+                    dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, "Autonomie", edtParsed[i].resources[0].room[0].item]);
+                } else if (edtParsed[i].resources[0].room == undefined) {
+                    dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, "Salle Non Définie"]);
                 } else {
-                    dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].notes[0], edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
-                }
-            } else if (edtParsed[i].resources[0].staff == undefined) {
-                dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, "Autonomie", edtParsed[i].resources[0].room[0].item]);
-            } else if (edtParsed[i].resources[0].room == undefined) {
-                dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, "Salle Non Définie"]);
-            } else {
 
-                if (edtParsed[i].notes != undefined) {
-                    dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, edtParsed[i].notes[0], edtParsed[i].resources[0].room[0].item]);
+                    if (edtParsed[i].notes != undefined) {
+                        dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, edtParsed[i].notes[0], edtParsed[i].resources[0].room[0].item]);
 
-                } else {
-                    dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
+                    } else {
+                        dayArray.push([edtParsed[i].prettytimes[0], edtParsed[i].resources[0].module[0].item, edtParsed[i].resources[0].staff[0].item, edtParsed[i].resources[0].room[0].item]);
+                    }
                 }
+
             }
 
+
+            i += indexWeek;
         }
 
         let dayString = new String("-----------------------\n");
@@ -110,7 +136,6 @@ module.exports = {
             dayString += "\n"
         };
 
-
         const embedDay = new MessageEmbed()
             .setColor("1E4F8A")
             .setTitle("Grp C Planning du Jour :")
@@ -119,7 +144,7 @@ module.exports = {
         message.channel.send({ embeds: [embedDay] });
     },
     runInteraction: (client, interaction) => {
-        interaction.reply('Planning n\'accepte pas les / commands');
+        interaction.reply(`N\'accepte pas les / commands`);
     },
 
 }

@@ -39,7 +39,7 @@ module.exports = {
 
     },
     runInteraction: (client, interaction) => {
-        interaction.reply('Pong!');
+        interaction.reply(`N\'accepte pas les / commands`);
     },
 
 }
